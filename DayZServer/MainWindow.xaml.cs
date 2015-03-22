@@ -16,6 +16,7 @@ using System.IO;
 using System.Timers;
 using System.Windows.Media.Animation;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace DayZServer
 {
@@ -36,7 +37,8 @@ namespace DayZServer
             aTimer.Elapsed += OnTimedEvent;
             aTimer.Enabled = true;
             clear_button.Visibility = Visibility.Hidden;
-   
+            join_button.Visibility = Visibility.Hidden;
+            
         }
 
         void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -213,6 +215,7 @@ namespace DayZServer
 
             if (File.Exists(currentserverpath))
             {
+                join_button.Visibility = Visibility.Visible;
                 try
                 {
                     // Create an instance of StreamReader to read from a file. 
@@ -278,11 +281,29 @@ namespace DayZServer
             
         }
 
+        private void JoinServer(object sender, RoutedEventArgs e)
+        {
+            string appDataPath = Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+            string path = System.IO.Path.Combine(appDataPath, "DayZServer");
+            string latestserverpath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), path, "dayzserver.txt");
 
+            if( File.Exists(latestserverpath) )
+            {
+                var lines = File.ReadAllLines(latestserverpath);
+                string server = lines[1].ToString();
+                server = server.Remove(0, 12);
+                
+                // start the game seperated from this process.
+                using (Process game = new Process())
+                {
+                    ProcessStartInfo startInf = new ProcessStartInfo("C:\\Program Files (x86)\\Steam\\SteamApps\\common\\DayZ\\DayZ.exe");
+                    startInf.Arguments = "-connect="+server;
+                    game.StartInfo = startInf;
+                    game.Start();
+                }
+            }
+        }
     }
-
-
-
 }
 
 

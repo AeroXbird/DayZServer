@@ -46,6 +46,7 @@
             <TextBlock x:Name="serverList" TextWrapping="Wrap" VerticalAlignment="Top" Width="535" Foreground="White" Background="{x:Null}" FontSize="14"  AllowDrop="False" HorizontalAlignment="Left" TextAlignment="Justify"/>
         </ScrollViewer>
         <Button x:Name="clear_button" Content="Clear History" Canvas.Left="77" Canvas.Top="286" Width="182" Background="#FF6F0000" Foreground="White" Click="ClearHistory" FontSize="18" BorderBrush="{x:Null}" Margin="70,253,330,70"/>
+        <Button x:Name="join_button" Content="Join" Background="#FF6F0000" Foreground="White" Click="JoinServer" FontSize="18" BorderBrush="{x:Null}" Margin="507,10,15,318"/>
     </Grid>
 
 </Window>
